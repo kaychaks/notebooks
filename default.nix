@@ -11,20 +11,13 @@ let
            (builtins.fromJSON (builtins.readFile ./versions.json));
 
 
-  overlay = self: super: {
-    python3 = super.python3.override {
-      packageOverrides = p-self: p-super: {
-        docutils = p-super.docutils.overridePythonAttrs (old: {doCheck = false;});
-      };
-    };
-  };
 
-  nixpkgs = import versions.nixpkgs { overlays = [ overlay ]; };
+  nixpkgs = import versions.nixpkgs {};
 
 in
   import "${versions.ihaskell}/release.nix" {
          inherit nixpkgs;
-         compiler = "ghc844";
+         compiler = "ghc865";
          packages = self: with self; [
                   papa
          ];
